@@ -24,32 +24,52 @@ Terraform simplifies infrastructure management, but deploying to multiple platfo
 ### Basic Terraform Commands  
 Here are the fundamental Terraform commands I have learned so far:  
 
-1️⃣ **Initialize Terraform**  
+**Initialize Terraform**  
 ```bash
 terraform init
 ```  
 This command initializes the Terraform working directory, downloads required provider plugins, and sets up the backend configuration.  
 
-2️⃣ **Plan Infrastructure Changes**  
+**Plan Infrastructure Changes**  
 ```bash
 terraform plan
 ```  
 Generates an execution plan, showing what changes Terraform will make before applying them.  
 
-3️⃣ **Apply Changes**  
+**Apply Changes**  
 ```bash
 terraform apply
 ```  
 Executes the planned changes and provisions the resources.  
 
-4️⃣ **Destroy Infrastructure**  
+**Destroy Infrastructure**  
 ```bash
 terraform destroy
 ```  
 Removes all resources defined in the Terraform configuration.  
 
-5️⃣ **Destroy a Specific Resource**  
+**Destroy a Specific Resource**  
 ```bash
 terraform destroy -target resource_type.resource_name
 ```  
 Deletes a specific resource without affecting the rest of the infrastructure.  
+
+**List All Resources in the State File**  
+```bash
+terraform state list
+```  
+Displays all resources that are currently managed by Terraform in the state file. This helps in checking what infrastructure has been deployed and is being tracked.  
+
+**Show Details of a Specific Resource**  
+```bash
+terraform state show resource_type.resource_name
+```  
+Shows detailed information about a specific resource in the Terraform state. This is useful for debugging and verifying resource properties such as IDs, configurations, and dependencies.  
+
+**Define and Output a Resource Value**  
+```hcl
+output "output-name" {
+  value = resource_type.resource_name.id
+}
+```  
+Terraform **outputs** allow users to extract and display resource attributes after deployment. This is commonly used to retrieve values like public IPs, resource IDs, or database endpoints.  
