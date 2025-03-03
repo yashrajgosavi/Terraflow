@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Navigate to the repository root
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root" || exit 1
+
+# Find all Terraform files in aws, azure, and kubernetes directories
+terraform_files=$(find aws azure kubernetes -type f -name "*.tf")
+
+if [[ -z "$terraform_files" ]]; then
+    exit 0
+fi
+
+# Check formatting of each Terraform file
+failed=()
+for file in $terraform_files; do
+    if ! terraform fmt -check "$file"; then
+        failed+=("$file")
+    fi
+done
+
+# If there are unformatted files, notify the user and exit with an error
+if [[ ${#failed[@]} -ne 0 ]]; then
+    echo "The following Terraform files are not formatted correctly:"
+    for file in "${failed[@]}"; do
+        echo " - $file"
+    done
+    echo "Run 'terraform fmt' to fix formatting."
+    exit 1
+fi
+
+exit 0
