@@ -1,5 +1,6 @@
-resource "kubernetes_namespace" "namespace-test" {
+resource "kubernetes_namespace" "argocd" {
   metadata {
-    name = "test"
+    name = "argocd"
   }
+  provider = kubernetes
 }
