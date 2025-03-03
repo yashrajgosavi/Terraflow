@@ -1,16 +1,21 @@
-crds:
-  keep: false
+controller:
+  replicas: 1
 
 configs:
   secret:
-    argocdServerAdminPassword: "0o9i8u7y" # real password is here
+    argocdServerAdminPassword: "$2a$10$M/UZ2nAXcUTV5/LdH/trFeZH10eXh1NwdIgVDOdrmFmJWyVnQLzlC" # real password is here in bcrpyt format
   repositories:
     - url: git@github.com:yashrajgosavi/argo-cd-helm-charts.git
       name: argo-cd-helm-charts
       type: git
 
 server:
+  replicas: 1
   service:
-    type: NodePort
-    nodePortHttp: 30080
-    nodePortHttps: 30443
+    type: ClusterIP
+
+repoServer:
+  replicas: 1
+
+applicationSet:
+  replicaCount: 1
