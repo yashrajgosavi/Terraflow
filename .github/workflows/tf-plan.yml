@@ -1,0 +1,81 @@
+name: Plan Infra
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: Select provider
+        required: true
+        type: choice
+        default: "kubernetes"
+        options:
+          - "kubernetes"
+          - "aws"
+          - "azure"
+
+jobs:
+  tf_fmt:
+    name: Terraform Formatting
+    runs-on: [self-hosted, wsl-dell-vostro]
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        id: fmt
+        run: |
+          cd ${{ inputs.provider }}
+          terraform fmt -check
+
+  tf_validate:
+    name: Terraform validate
+    runs-on: [self-hosted, wsl-dell-vostro]
+    needs: [tf_fmt]
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        id: init
+        run: |
+          cd ${{ inputs.provider }}
+          terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: |
+          cd ${{ inputs.provider }}
+          terraform validate
+
+  tf_plan:
+    name: Terraform Plan
+    runs-on: [self-hosted, wsl-dell-vostro]
+    needs: [tf_fmt,tf_validate]
+
+    steps:
+
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+  
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        id: init
+        run: |
+          cd ${{ inputs.provider }}
+          terraform init
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          cd ${{ inputs.provider }}
+          terraform plan
