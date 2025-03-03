@@ -1,0 +1,16 @@
+crds:
+  keep: false
+
+configs:
+  secret:
+    argocdServerAdminPassword: "0o9i8u7y" # real password is here
+  repositories:
+    - url: git@github.com:yashrajgosavi/argo-cd-helm-charts.git
+      name: argo-cd-helm-charts
+      type: git
+
+server:
+  service:
+    type: NodePort
+    nodePortHttp: 30080
+    nodePortHttps: 30443

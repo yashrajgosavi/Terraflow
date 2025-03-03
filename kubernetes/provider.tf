@@ -1,10 +1,10 @@
 terraform {
   required_providers {
-    kubectl = {
-      source = "gavinbunney/kubectl"
-    }
     kubernetes = {
       source = "hashicorp/kubernetes"
+    }
+    kubectl = {
+      source = "gavinbunney/kubectl"
     }
     helm = {
       source = "hashicorp/helm"
@@ -20,6 +20,12 @@ provider "kubernetes" {
   config_path    = "~/.kube/config"
 }
 
+provider "kubectl" {
+  config_context   = "minikube"
+  config_path      = "~/.kube/config"
+  load_config_file = false
+}
+
 provider "helm" {
   kubernetes {
     config_context = "minikube"
@@ -27,8 +33,6 @@ provider "helm" {
   }
 }
 
-provider "kubectl" {
-  config_context   = "minikube"
-  config_path      = "~/.kube/config"
-  load_config_file = false
+provider "argocd" {
+  config_path = "~/.config/argocd"
 }
