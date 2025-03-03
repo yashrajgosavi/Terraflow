@@ -27,7 +27,7 @@ for dir in "${terraform_dirs[@]}"; do
         fi
 
         echo "Initializing Terraform in $dir..."
-        terraform -chdir="$dir" init -backend=false > /dev/null 2>&1
+        terraform -chdir="$dir" init -backend=false -upgrade > /dev/null 2>&1
 
         echo "Validating Terraform configuration in $dir..."
         if ! terraform -chdir="$dir" validate > /tmp/tf_validate_error.log 2>&1; then
