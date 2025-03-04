@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: product-backend-test
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: git@github.com:yashrajgosavi/argo-cd-helm-charts.git
+      revision: main
+      directories:
+      - path: apps/release/*
+      - exclude: true      
+        path: apps/backup/
+  template:
+    metadata:
+      name: '{{path.basename}}-test'
+    spec:
+      project: product-test
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+      source:
+        helm:
+          valueFiles:
+            - values-test.yaml
+        repoURL: git@github.com:yashrajgosavi/argo-cd-helm-charts.git
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        name: in-cluster
+        server: https://kubernetes.default.svc
+        namespace: product-test
