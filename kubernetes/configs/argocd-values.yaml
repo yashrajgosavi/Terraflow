@@ -3,7 +3,7 @@ controller:
 
 configs:
   secret:
-    argocdServerAdminPassword: "$2a$10$M/UZ2nAXcUTV5/LdH/trFeZH10eXh1NwdIgVDOdrmFmJWyVnQLzlC" # real password is here in bcrpyt format
+    argocdServerAdminPassword: "${ARGOCD_ADMIN_PASSWORD_BCRYPT}" # real password is here in bcrpyt format
   repositories:
     - url: git@github.com:yashrajgosavi/argo-cd-helm-charts.git
       name: argo-cd-helm-charts
