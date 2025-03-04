@@ -9,9 +9,6 @@ terraform {
     helm = {
       source = "hashicorp/helm"
     }
-    argocd = {
-      source = "argoproj-labs/argocd"
-    }
   }
 }
 
@@ -23,18 +20,18 @@ provider "kubernetes" {
 }
 
 provider "kubectl" {
-  config_context   = "minikube"
-  config_path      = "~/.kube/config"
+  host                   = var.k8s_host
+  client_certificate     = var.k8s_client_certificate
+  client_key             = var.k8s_client_key
+  cluster_ca_certificate = var.k8s_cluster_ca_certificate
   load_config_file = false
 }
 
 provider "helm" {
   kubernetes {
-    config_context = "minikube"
-    config_path    = "~/.kube/config"
+    host                   = var.k8s_host
+    client_certificate     = var.k8s_client_certificate
+    client_key             = var.k8s_client_key
+    cluster_ca_certificate = var.k8s_cluster_ca_certificate
   }
-}
-
-provider "argocd" {
-  config_path = "~/.config/argocd"
 }
