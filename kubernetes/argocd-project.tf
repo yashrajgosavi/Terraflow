@@ -10,7 +10,8 @@ resource "argocd_project" "test" {
     }
     source_repos = ["${local.charts_repo.git_repo}"]
   }
-  provider = argocd
+  provider   = argocd
+  depends_on = [helm_release.argocd]
 }
 
 resource "argocd_project" "prod" {
@@ -25,5 +26,6 @@ resource "argocd_project" "prod" {
     }
     source_repos = ["${local.charts_repo.git_repo}"]
   }
-  provider = argocd
+  provider   = argocd
+  depends_on = [helm_release.argocd]
 }

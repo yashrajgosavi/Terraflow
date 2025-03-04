@@ -13,7 +13,7 @@ resource "kubernetes_role_binding" "argocd-role-binding" {
     namespace = "argocd"
   }
   provider   = kubernetes
-  depends_on = [kubernetes_namespace.argocd]
+  depends_on = [helm_release.argocd]
 }
 
 resource "kubernetes_role_binding" "prod-role-binding" {
