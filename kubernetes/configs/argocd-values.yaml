@@ -3,7 +3,7 @@ controller:
 
 configs:
   secret:
-    argocdServerAdminPassword: "${ARGOCD_ADMIN_PASSWORD_BCRYPT}" # real password is here in bcrpyt format
+    argocdServerAdminPassword: "${ARGOCD_ADMIN_PASSWORD_BCRYPT}" # real password is here in bcrypt format
   repositories:
     - url: "${ARGOCD_HELM_CHARTS_REPO}"
       name: "${ARGOCD_HELM_CHARTS_REPO_NAME}"
@@ -12,7 +12,9 @@ configs:
 server:
   replicas: 1
   service:
-    type: ClusterIP
+    type: NodePort  # Change from ClusterIP to NodePort
+    nodePortHttp: 30080  # Optional: Specify the NodePort for HTTP (if needed)
+    nodePortHttps: 30443  # Optional: Specify the NodePort for HTTPS (if needed)
 
 repoServer:
   replicas: 1
