@@ -12,7 +12,7 @@ configs:
 server:
   replicas: 1
   service:
-    type: ClusterIP
+    type: LoadBalancer
 
 repoServer:
   replicas: 1
