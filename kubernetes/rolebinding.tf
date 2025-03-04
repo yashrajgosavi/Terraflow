@@ -12,6 +12,7 @@ resource "kubernetes_role_binding" "argocd-role-binding" {
     name      = "argocd-server"
     namespace = "argocd"
   }
+  provider   = kubernetes
   depends_on = [kubernetes_namespace.argocd]
 }
 
@@ -29,6 +30,7 @@ resource "kubernetes_role_binding" "prod-role-binding" {
     name      = "default"
     namespace = "product-prod"
   }
+  provider   = kubernetes
   depends_on = [kubernetes_namespace.prod]
 }
 
@@ -46,5 +48,6 @@ resource "kubernetes_role_binding" "test-role-binding" {
     name      = "default"
     namespace = "product-test"
   }
+  provider   = kubernetes
   depends_on = [kubernetes_namespace.test]
 }

@@ -9,6 +9,9 @@ terraform {
     helm = {
       source = "hashicorp/helm"
     }
+    argocd = {
+      source = "argoproj-labs/argocd"
+    }
   }
 }
 
@@ -34,4 +37,11 @@ provider "helm" {
     client_key             = base64decode(var.k8s_client_key)
     cluster_ca_certificate = base64decode(var.k8s_cluster_ca_certificate)
   }
+}
+
+provider "argocd" {
+  username    = local.argocd.username
+  password    = local.argocd.password
+  server_addr = local.argocd.server_addr
+  insecure    = true
 }
