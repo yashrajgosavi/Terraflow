@@ -1,5 +1,5 @@
 locals {
-  product = "ahq"
+  product = "product"
 
   charts_repo = {
     git_repo      = "https://github.com/yashrajgosavi/argo-cd-helm-charts"

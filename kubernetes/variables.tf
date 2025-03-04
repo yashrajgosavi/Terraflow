@@ -32,3 +32,17 @@ variable "k8s_cluster_ca_certificate" {
 #   echo "client_certificate: $(cat ~/.minikube/profiles/minikube/client.crt | base64 -w 0)";
 #   echo "client_key: $(cat ~/.minikube/profiles/minikube/client.key | base64 -w 0)";
 # } > minikube_credentials.txt
+
+# $host = kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}'
+# $minikubePath = "C:\Users\yashr\.minikube"
+
+# $clusterCaCertificate = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("$minikubePath\ca.crt"))
+# $clientCertificate = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("$minikubePath\profiles\minikube\client.crt"))
+# $clientKey = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("$minikubePath\profiles\minikube\client.key"))
+
+# @"
+# host: $host
+# cluster_ca_certificate: $clusterCaCertificate
+# client_certificate: $clientCertificate
+# client_key: $clientKey
+# "@ | Set-Content -Path .\minikube_credentials.txt
