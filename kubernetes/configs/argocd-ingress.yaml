@@ -1,16 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: argocd-server
+  name: argocd
   namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/instance: argocd
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 spec:
+  ingressClassName: nginx
   rules:
-    - host: app.yokai.com
+    - host: argocd.local
       http:
         paths:
           - path: /
@@ -22,5 +24,5 @@ spec:
                   number: 443
   tls:
     - hosts:
-        - app.yokai.com
-      secretName: argocd-tls  # Ensure this secret exists for HTTPS
+        - argocd.local
+      secretName: argocd-server-tls
