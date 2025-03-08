@@ -31,9 +31,8 @@ resource "kubectl_manifest" "application_set_test" {
           targetRevision: main
           path: '{{path}}'
         destination:
-          name: in-cluster
-          server: https://kubernetes.default.svc
           namespace: product-test
+          server: https://kubernetes.default.svc
   EOT
   depends_on = [ argocd_project.test ]
 }
