@@ -9,7 +9,7 @@ locals {
   argocd = {
     username    = "admin"
     password    = "0o9i8u7y"
-    server_addr = "app.yokai.com"
+    server_addr = "localhost:80"
   }
 
   cluster = {
