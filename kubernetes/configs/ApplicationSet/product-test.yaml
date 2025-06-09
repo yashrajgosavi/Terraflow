@@ -8,27 +8,24 @@ spec:
   - git:
       repoURL: https://github.com/yashrajgosavi/argo-cd-helm-charts
       revision: main
-      directories:
-      - path: apps/*
-      - exclude: true      
-        path: apps/backup/
+      files:
+      - path: apps/**/values-test.yaml
   template:
     metadata:
       name: '{{path.basename}}-test'
     spec:
       project: product-test
+      source:
+        helm:
+          valueFiles:
+          - values-test.yaml
+        path: '{{path}}'
+        repoURL: https://github.com/yashrajgosavi/argo-cd-helm-charts
+        targetRevision: main
+      destination:
+        namespace: product-test
+        server: https://kubernetes.default.svc
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-      source:
-        helm:
-          valueFiles:
-            - values-test.yaml
-        repoURL: https://github.com/yashrajgosavi/argo-cd-helm-charts
-        targetRevision: main
-        path: '{{path}}'
-      destination:
-        name: in-cluster
-        server: https://kubernetes.default.svc
-        namespace: product-test
